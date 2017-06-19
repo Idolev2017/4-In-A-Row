@@ -131,7 +131,7 @@ char spFiarGameGetCurrentPlayer(SPFiarGame* src){
 
 char spFiarCheckWinner(SPFiarGame* src){
 	if(src == NULL) return '\0';
-	if(src->player1Moves->actualSize <= 2 || src->player2Moves->actualSize <= 2){
+	if(src->player1Moves->actualSize <= SP_FIAR_GAME_SPAN-2 || src->player2Moves->actualSize <= SP_FIAR_GAME_SPAN-2){
 		return '\0';
 	}
 	int col = (spFiarGameGetCurrentPlayer(src) == SP_FIAR_GAME_PLAYER_1_SYMBOL) ? spArrayListGetFirst(src->player2Moves) : spArrayListGetFirst(src->player1Moves);
@@ -167,7 +167,7 @@ char CheckAscendingDiagonal (SPFiarGame* src,int col,int row){
 		}
 		else break;
 	}
-	return (cnt >= 3) ? lastTurn : '\0';
+	return (cnt >= SP_FIAR_GAME_SPAN-1) ? lastTurn : '\0';
 }
 char CheckDescendingDiagonal (SPFiarGame* src,int col,int row){
 	char lastTurn = src->gameBoard[row][col];
@@ -193,20 +193,20 @@ char CheckDescendingDiagonal (SPFiarGame* src,int col,int row){
 		else break;
 	}
 
-	return (cnt >= 3) ? lastTurn : '\0';
+	return (cnt >= SP_FIAR_GAME_SPAN-1) ? lastTurn : '\0';
 }
 char CheckRowAndColumn (SPFiarGame* src,int col,int row){
 	char lastTurn = src->gameBoard[row][col];
 	int cnt = 0;
 	//rows
-	int leftLimit = max(0,col-3);
-	int rightLimit = min(SP_FIAR_GAME_N_COLUMNS-1 ,col+3);
+	int leftLimit = max(0,col-(SP_FIAR_GAME_SPAN-1));
+	int rightLimit = min(SP_FIAR_GAME_N_COLUMNS-1 ,col+SP_FIAR_GAME_SPAN-1);
 	for(int j = leftLimit; j <= rightLimit; ++j){
 		cnt = (src->gameBoard[row][j] == lastTurn) ? cnt + 1 : 0;
-		if(cnt == 4) return lastTurn;
+		if(cnt == SP_FIAR_GAME_SPAN) return lastTurn;
 	}
 	//Columns
-	if(3 <= row){
+	if(SP_FIAR_GAME_SPAN-1 <= row){
 		for(int j = 0; j < 4; ++j){
 			if(src->gameBoard[row - j][col] != lastTurn) return '\0';
 		}
