@@ -138,6 +138,7 @@ void comPlay(SPFiarGame* game,int difficultyLevel){
 	spFiarGameSetMove(game,col);
 }
 int initializationGame(){
+	printEnterLevel();
 	int difficultyLevel = 0;
 	char* line = (char*) malloc((Max_len+1)*sizeof(char));
 	if(line == NULL) {

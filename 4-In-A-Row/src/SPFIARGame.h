@@ -146,8 +146,32 @@ SP_FIAR_GAME_MESSAGE spFiarGamePrintBoard(SPFiarGame* src);
  * SP_FIAR_GAME_EMPTY_ENTRY     - otherwise
  */
 char spFiarGameGetCurrentPlayer(SPFiarGame* src);
+/**
+ * check if there is a winner vertically or horizontally.
+ * @param src - the source game, to coordinate of the last turn.
+ * @return
+ * SP_FIAR_GAME_PLAYER_1_SYMBOL - if player 1 is the winner
+ * SP_FIAR_GAME_PLAYER_2_SYMBOL - if player 2 is the winner
+ * SP_FIAR_GAME_EMPTY_ENTRY     - otherwise
+ */
 char CheckRowAndColumn (SPFiarGame* src,int col,int row);
+/**
+ * check if there is a winner in ascending diagonals.
+ * @param src - the source game, to coordinate of the last turn.
+ * @return
+ * SP_FIAR_GAME_PLAYER_1_SYMBOL - if player 1 is the winner
+ * SP_FIAR_GAME_PLAYER_2_SYMBOL - if player 2 is the winner
+ * SP_FIAR_GAME_EMPTY_ENTRY     - otherwise
+ */
 char CheckAscendingDiagonal (SPFiarGame* src,int col,int row);
+/**
+ * check if there is a winner in descending diagonals.
+ * @param src - the source game, to coordinate of the last turn.
+ * @return
+ * SP_FIAR_GAME_PLAYER_1_SYMBOL - if player 1 is the winner
+ * SP_FIAR_GAME_PLAYER_2_SYMBOL - if player 2 is the winner
+ * SP_FIAR_GAME_EMPTY_ENTRY     - otherwise
+ */
 char CheckDescendingDiagonal (SPFiarGame* src,int col,int row);
 /**
 * Checks if there's a winner in the specified game status. The function returns either

@@ -13,7 +13,6 @@
 
 int main(void) {
 	setvbuf(stdout, NULL, _IONBF, 0);
-	printEnterLevel();
 	int difficultyLevel = initializationGame();
 	SP_COMMAND cmd = 0;
 	bool win = false;
@@ -31,7 +30,6 @@ int main(void) {
 			return 0;            //quit
 		}
 		if(cmd == SP_RESTART) {           //restart
-			printEnterLevel();
 			difficultyLevel = initializationGame();
 			spFiarGameDestroy(game);
 			if(difficultyLevel == -1) return 0;
