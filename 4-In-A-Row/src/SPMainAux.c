@@ -152,7 +152,7 @@ int initializationGame(){
 	if(strcmp(line, "quit") == 0){
 		printf("Exiting...\n");
 		free(line);
-		return -1;
+		exit(42);
 	}
 	else if(!spParserIsInt(line)){
 		printErrorLevel();

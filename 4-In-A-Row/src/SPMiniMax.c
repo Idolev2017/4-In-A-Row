@@ -12,25 +12,11 @@
 static int constVector[SP_FIAR_GAME_N_COLUMNS] = {-5,-2,-1,0,1,2,5};
 int spMinimaxSuggestMove(SPFiarGame* currentGame, unsigned int maxDepth){
 	if (currentGame == NULL || maxDepth <= 0) return -1;
-	int childvalue = 0;
-	int max = INT_MIN;
-	int maxCol = -1;
-	char WhoCallMe = spFiarGameGetCurrentPlayer(currentGame);
-	for(int col = 0; col < SP_FIAR_GAME_N_COLUMNS; ++col){
-		if (spFiarGameIsValidMove(currentGame,col)){
-			spFiarGameSetMove(currentGame,col);
-			childvalue = spRecursiveMiniMax(currentGame,maxDepth-1,false,WhoCallMe);
-			if(max < childvalue || maxCol == -1){
-				max = childvalue;
-				maxCol = col;
-			}
-			spFiarGameUndoPrevMove(currentGame);
-		}
-	}
-	return maxCol;
+	char whoCalledMe = spFiarGameGetCurrentPlayer(currentGame);
+	return spRecursiveMiniMax(currentGame,maxDepth,true,whoCalledMe,true);
 }
 
-int spRecursiveMiniMax(SPFiarGame* currentGame,unsigned int maxDepth,bool flag,char whoCalledMe){
+int spRecursiveMiniMax(SPFiarGame* currentGame,unsigned int maxDepth,bool flag,char whoCalledMe, bool Root){
 	char winner = spFiarCheckWinner(currentGame);
 	if(winner != '\0'){
 		if(winner == SP_FIAR_GAME_PLAYER_1_SYMBOL || winner == SP_FIAR_GAME_PLAYER_2_SYMBOL){
@@ -41,15 +27,23 @@ int spRecursiveMiniMax(SPFiarGame* currentGame,unsigned int maxDepth,bool flag,c
 	if (maxDepth == 0) return utilityFunction(currentGame,whoCalledMe);
 	int childvalue = 0;
 	int value = flag ? INT_MIN : INT_MAX;
+	int bestCol = -1;
 	for(int col = 0; col < SP_FIAR_GAME_N_COLUMNS; ++col){
 		if (spFiarGameIsValidMove(currentGame,col)){
 			spFiarGameSetMove(currentGame,col);
-			childvalue = spRecursiveMiniMax(currentGame,maxDepth-1,!flag,whoCalledMe);
-			value = flag ? max(value,childvalue) : min(value,childvalue);
+			childvalue = spRecursiveMiniMax(currentGame,maxDepth-1,!flag,whoCalledMe, false);
+			if ((flag && value < childvalue) || bestCol == -1){
+				value = childvalue;
+				bestCol = col;
+			}
+			else if(!flag && childvalue < value){
+				value = childvalue;
+				bestCol = col;
+			}
 			spFiarGameUndoPrevMove(currentGame);
 		}
 	}
-	return value;
+	return Root ? bestCol : value;
 }
 
 int utilityFunction(SPFiarGame* currentGame, char whoCalledMe){

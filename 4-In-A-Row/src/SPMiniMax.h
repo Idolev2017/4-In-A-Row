@@ -18,7 +18,7 @@
  * which is the best move for the current player.
  */
 int spMinimaxSuggestMove(SPFiarGame* currentGame, unsigned int maxDepth);
-int spRecursiveMiniMax(SPFiarGame* currentGame,unsigned int maxDepth,bool flag,char whoCalledMe);
+int spRecursiveMiniMax(SPFiarGame* currentGame,unsigned int maxDepth,bool flag,char whoCalledMe, bool Root);
 /**
  * Given a game state, this function evaluate and return of the utility of the state, according to
  * the player that called her.

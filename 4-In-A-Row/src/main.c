@@ -15,7 +15,6 @@ int main(void) {
 	setvbuf(stdout, NULL, _IONBF, 0);
 	printEnterLevel();
 	int difficultyLevel = initializationGame();
-	if(difficultyLevel == -1) return 0;
 	SP_COMMAND cmd = 0;
 	bool win = false;
 	char winner = ' ';

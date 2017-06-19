@@ -146,7 +146,9 @@ SP_FIAR_GAME_MESSAGE spFiarGamePrintBoard(SPFiarGame* src);
  * SP_FIAR_GAME_EMPTY_ENTRY     - otherwise
  */
 char spFiarGameGetCurrentPlayer(SPFiarGame* src);
-
+char CheckRowAndColumn (SPFiarGame* src,int col,int row);
+char CheckAscendingDiagonal (SPFiarGame* src,int col,int row);
+char CheckDescendingDiagonal (SPFiarGame* src,int col,int row);
 /**
 * Checks if there's a winner in the specified game status. The function returns either
 * SP_FIAR_GAME_PLAYER_1_SYMBOL or SP_FIAR_GAME_PLAYER_2_SYMBOL in case there's a winner, where
